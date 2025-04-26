@@ -2,15 +2,25 @@ require('dotenv').config();
 require('colors');
 const cors = require('cors');
 const express = require('express');
+const connectDB = require('./config/db');
 const app = express();
+const cookieParser = require('cookie-parser');
+const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes');
+
+// _______________________CONNECT_DB_______________________
+connectDB();
+
+// _______________________CONIFGURATIONS_______________________
+app.use(express.json());
+app.use(cookieParser());
 
 // _______________________PORT_______________________
 const PORT = process.env.PORT || 8000;
 if (!PORT) {
-    console.error("PORT is not defined.".red.bold);
+    console.error("PORT is not defined.".bgRed.bold);
     process.exit(1);
 }
-
 
 // _______________________CORS_______________________
 const corsOptions = {
@@ -21,18 +31,16 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-
 // _______________________ROUTES_______________________
 app.get('/', (req, res) => {
     res.send("Welcome To ChatApp!");
-})
+});
 
-app.get('/api/chats', (req, res) => {
-    res.send('Ye lo chats!!!');
-})
+app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 
 // _______________________LISTEN_______________________
 const server = app.listen(PORT, () => {
-    console.log(`Server started successfully on http://localhost:${PORT}`.green.bold);
-})
+    console.log(`Server started successfully on http://localhost:${PORT}`.bgCyan.bold);
+});
