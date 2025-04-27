@@ -6,7 +6,7 @@ const sendMessage = async (req, res) => {
         const { content, chatId } = req.body;
 
         if (!content || !chatId) {
-            req.sendStatus(400);
+            res.sendStatus(400);
             throw new Error("All Fields Are Mandatory!");
         }
 
