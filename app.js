@@ -7,6 +7,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/userRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 // _______________________CONNECT_DB_______________________
 connectDB();
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/message', messageRoutes);
 
 
 // _______________________LISTEN_______________________
